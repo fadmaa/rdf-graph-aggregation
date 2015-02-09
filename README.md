@@ -2,6 +2,32 @@ This project documents the SPARQL queries used in benchmarking _Gagg_, an RDF gr
 
 ## BSBM type Summary
 
+```
+PREFIX : <http://example.org/> 
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+CONSTRUCT { 
+    _:b0 a ?t1; :count ?subD_count .
+    _:b1 a ?t2; :count ?objD_count .
+    _:b2 a rdf:Statement; rdf:predicate ?p; rdf:subject _:b0; rdf:object _:b1; :count ?prop_count 
+} WHERE {
+    SELECT ?t1 ?subD_count ?t2 ?objD_count ?p (COUNT(*) AS ?prop_count){
+        {
+            SELECT ?t1 (COUNT(?s) AS ?subD_count)
+            WHERE{
+                ?s a ?t1 . ?s ?p ?o . ?o a ?t2 .
+            } GROUP BY ?t1
+        }
+        {
+            SELECT ?t2 (COUNT(?o) AS ?objD_count)
+            WHERE{
+                ?s a ?t1 . ?s ?p ?o . ?o a ?t2 .
+            } GROUP BY ?t2
+        }
+        ?s ?p ?o; a ?t1 . ?o a ?t2 . 
+    } GROUP BY ?t1 ?t2 ?subD_count ?objD_count ?p
+}
+```
 ## SP2B Bibliography data
 
 ### Co-authorship summary
