@@ -1,7 +1,7 @@
 This project documents the SPARQL queries used in benchmarking _Gagg_, an RDF graph aggregation operator.
 
 ## BSBM type Summary
-
+### SPARQL
 ```
 PREFIX : <http://example.org/> 
 PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -28,6 +28,25 @@ CONSTRUCT {
     } GROUP BY ?t1 ?t2 ?subD_count ?objD_count ?p
 }
 ```
+
+### Gagg Syntax
+```
+PREFIX : <http://example.org/> 
+PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+CONSTRUCT { 
+    _:b0 a ?t1; :count COUNT(?sub.s) .
+    _:b1 a ?t2; :count COUNT(?obj.o).
+    _:b2 a rdf:Statement; rdf:predicate ?prop; rdf:subject _:b0; rdf:object _:b1; :count ?prop_count 
+} WHERE {
+    GRAPH_AGGREGATION  {
+        {?s ?p ?o} AS ?prop
+    	{?s a ?t1} GROUP BY ?t1 AS ?sub
+    	{?o a ?t2} GROUP BY ?t2 AS ?obj
+    }
+}
+```
+
 ## SP2B Bibliography data
 
 ### Co-authorship summary
