@@ -1,4 +1,4 @@
-This project documents the SPARQL queries used in benchmarking _Gagg_, an RDF graph aggregation operator.
+This project documents the SPARQL queries used in benchmarking _Gagg_, an RDF graph aggregation operator. The code provided is not meant to run. This is only the part of the code responsible for benchmarking. The actual code that evaluates the queries is not open-sourced (yet). Example queries are shown below but futher queries can be seen in the code provided. Notice, that [Jena SSE Syntax](https://jena.apache.org/documentation/notes/sse.html) is used in the code while a tentative SPARQL syntax is provided below.
 
 ## BSBM type Summary
 ### SPARQL
